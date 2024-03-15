@@ -71,6 +71,13 @@ export async function drawName(_prevState: any, formData: FormData) {
         },
     });
 
+    if (!participant) {
+        return {
+            error: `We cannot find '${name}' from the list. Please try again.`,
+            resetForm: true,
+        };
+    }
+
     const map = await prisma.santaMapping.findFirst({
         where: {
             santaId: participant?.id,
@@ -83,5 +90,7 @@ export async function drawName(_prevState: any, formData: FormData) {
         },
     });
 
-    return { name: nameDrawn?.name };
+    // send nameDrawn to participant.email using 'create-email' action
+
+    return { response: nameDrawn, resetForm: true };
 }
