@@ -1,3 +1,5 @@
+import { PrimeReactProvider } from "primereact/api";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -14,7 +16,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <PrimeReactProvider>
+                <body className={inter.className}>{children}</body>
+            </PrimeReactProvider>
         </html>
     );
 }
