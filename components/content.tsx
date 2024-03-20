@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Button from "./ui/button";
+import Link from "next/link";
 
 export default function Content({ children }: { children: React.ReactNode }) {
     const [message, setMessage] = useState<string>("");
@@ -19,6 +20,7 @@ export default function Content({ children }: { children: React.ReactNode }) {
 
     return (
         <>
+            <h2>Participants</h2>
             {children}
             {!message && (
                 <Button isDisabled={isLoading} onClick={handleButtonClick}>
@@ -31,6 +33,11 @@ export default function Content({ children }: { children: React.ReactNode }) {
                     <Button link="/draw-name">Draw Name</Button>
                 </>
             )}
+            <p>
+                Name not on the list? Click{" "}
+                <Link href="/add-participant">here</Link> to join the exchanging
+                of gifts!
+            </p>
         </>
     );
 }
