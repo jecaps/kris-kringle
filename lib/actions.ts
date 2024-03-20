@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
+import { redirect } from "next/navigation";
 
 export async function addParticipant(_prevState: any, formData: FormData) {
     const name = formData.get("name");
@@ -9,7 +10,6 @@ export async function addParticipant(_prevState: any, formData: FormData) {
     if (!name || !wishlist) {
         return {
             error: "Please enter your name and your wishlist",
-            resetForm: false,
         };
     }
 
@@ -25,8 +25,7 @@ export async function addParticipant(_prevState: any, formData: FormData) {
             wishlist: wishlistArray,
         },
     });
-
-    return { resetForm: true };
+    redirect("/");
 }
 
 export async function assignSanta() {
@@ -53,6 +52,7 @@ export async function assignSanta() {
             },
         });
     }
+    return "Names have been shuffled! You can now pick a name from the list!";
 }
 
 export async function drawName(_prevState: any, formData: FormData) {
