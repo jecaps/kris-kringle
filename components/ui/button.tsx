@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Button } from "primereact/button";
 
 type ButtonProps = {
     onClick?: () => {};
@@ -9,7 +10,7 @@ type ButtonProps = {
     children: React.ReactNode;
 };
 
-export default function Button({
+export default function Btn({
     onClick,
     link,
     isDisabled,
@@ -20,8 +21,8 @@ export default function Button({
     }
 
     return (
-        <button disabled={isDisabled} onClick={onClick}>
+        <Button disabled={isDisabled} onClick={onClick}>
             {children}
-        </button>
+        </Button>
     );
 }
