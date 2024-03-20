@@ -1,32 +1,25 @@
 "use client";
 
-import { useFormState } from "react-dom";
-import { useEffect, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 import { addParticipant } from "@/lib/actions";
+import Btn from "../ui/button";
+
+function SubmitBtn() {
+    const { pending } = useFormStatus();
+
+    return (
+        <Btn isDisabled={pending}>{pending ? "Submitting..." : "Submit"}</Btn>
+    );
+}
 
 export default function ParticipantForm() {
     const [state, formAction] = useFormState(addParticipant, undefined);
-    const [name, setName] = useState("");
-    const [wishlist, setWishlist] = useState("");
-
-    useEffect(() => {
-        if (state?.resetForm) {
-            setName("");
-            setWishlist("");
-        }
-    }, [state?.resetForm]);
 
     return (
         <>
             <form action={formAction}>
                 <label htmlFor="name">Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
+                <input type="text" id="name" name="name" />
                 <label htmlFor="wishlist">
                     Wishlist <span>(example: books, pens, shoes)</span>
                 </label>
@@ -35,10 +28,8 @@ export default function ParticipantForm() {
                     id="wishlist"
                     name="wishlist"
                     placeholder="separate items with a comma"
-                    value={wishlist}
-                    onChange={(e) => setWishlist(e.target.value)}
                 />
-                <button>Submit</button>
+                <SubmitBtn />
             </form>
             {state?.error && <p>{state.error}</p>}
         </>

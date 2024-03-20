@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Button from "./ui/button";
+import Btn from "./ui/button";
 import Link from "next/link";
 
 export default function Content({ children }: { children: React.ReactNode }) {
@@ -23,14 +23,14 @@ export default function Content({ children }: { children: React.ReactNode }) {
             <h2>Participants</h2>
             {children}
             {!message && (
-                <Button isDisabled={isLoading} onClick={handleButtonClick}>
+                <Btn isDisabled={isLoading} onClick={handleButtonClick}>
                     {isLoading ? "Shuffling..." : "Shuffle Names"}
-                </Button>
+                </Btn>
             )}
             {message && (
                 <>
                     <p>{message}</p>
-                    <Button link="/draw-name">Draw Name</Button>
+                    <Btn link="/draw-name">Draw Name</Btn>
                 </>
             )}
             <p>
