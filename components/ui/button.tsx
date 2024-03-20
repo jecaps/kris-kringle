@@ -1,21 +1,27 @@
 "use client";
 
-// import { useFormStatus } from "react-dom";
+import Link from "next/link";
 
-export default function Button(props: {
-    onClick?: any;
-    disabled?: boolean;
+type ButtonProps = {
+    onClick?: () => {};
+    link?: string;
+    isDisabled?: boolean;
     children: React.ReactNode;
-}) {
-    if (props.onClick) {
-        return (
-            <button onClick={() => props.onClick()}>{props.children}</button>
-        );
+};
+
+export default function Button({
+    onClick,
+    link,
+    isDisabled,
+    children,
+}: ButtonProps) {
+    if (link) {
+        return <Link href={link}>{children}</Link>;
     }
 
-    if (props.disabled) {
-        return <button disabled>{props.children}</button>;
-    }
-
-    return <button>{props.children}</button>;
+    return (
+        <button disabled={isDisabled} onClick={onClick}>
+            {children}
+        </button>
+    );
 }
