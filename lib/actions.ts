@@ -3,6 +3,10 @@
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 
+export async function getParticipants() {
+    return await prisma.participant.findMany();
+}
+
 export async function addParticipant(_prevState: any, formData: FormData) {
     const name = formData.get("name");
     const wishlist = formData.get("wishlist");
