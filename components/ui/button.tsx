@@ -4,24 +4,23 @@ import Link from "next/link";
 import { Button } from "primereact/button";
 
 type ButtonProps = {
-    onClick?: () => {};
+    onClick?: () => {} | void;
     link?: string;
-    isDisabled?: boolean;
+    loading?: boolean;
     children: React.ReactNode;
 };
 
-export default function Btn({
-    onClick,
-    link,
-    isDisabled,
-    children,
-}: ButtonProps) {
+export default function Btn({ onClick, link, loading, children }: ButtonProps) {
     if (link) {
-        return <Link href={link}>{children}</Link>;
+        return (
+            <Link href={link} className="p-button no-underline text-white">
+                {children}
+            </Link>
+        );
     }
 
     return (
-        <Button disabled={isDisabled} onClick={onClick}>
+        <Button loading={loading} onClick={onClick} className="text-white">
             {children}
         </Button>
     );
