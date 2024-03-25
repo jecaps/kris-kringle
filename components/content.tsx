@@ -66,8 +66,13 @@ export default function Content({ children }: { children: React.ReactNode }) {
 
                 <p className="text-xs m-0">
                     Name not on the list? Click{" "}
-                    <Link href="/add-participant">here</Link> to join the
-                    exchanging of gifts!
+                    <Link
+                        className="no-underline text-blue-400"
+                        href="/add-participant"
+                    >
+                        here
+                    </Link>{" "}
+                    to join the exchanging of gifts!
                 </p>
             </div>
             <Toast ref={toast} />
