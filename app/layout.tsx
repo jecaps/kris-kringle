@@ -1,5 +1,5 @@
 import { PrimeReactProvider } from "primereact/api";
-import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/themes/lara-dark-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
@@ -21,7 +21,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <PrimeReactProvider>
-                <body className={inter.className}>{children}</body>
+                <body className={`${inter.className} m-auto w-6`}>
+                    {children}
+                </body>
             </PrimeReactProvider>
         </html>
     );
