@@ -1,27 +1,52 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 
 type ButtonProps = {
     onClick?: () => {} | void;
     link?: string;
     loading?: boolean;
+    className?: string;
+    severity?: "secondary" | "success" | "info" | "warning" | "danger" | "help";
+    outlined?: boolean;
+    disabled?: boolean;
+    raised?: boolean;
+    text?: boolean;
+    rounded?: boolean;
+    sizes?: "small" | "large";
     children: React.ReactNode;
 };
 
-export default function Btn({ onClick, link, loading, children }: ButtonProps) {
-    if (link) {
-        return (
-            <Link href={link} className="p-button no-underline text-white">
-                {children}
-            </Link>
-        );
-    }
+export default function Btn({
+    onClick,
+    link,
+    loading,
+    className,
+    severity,
+    outlined,
+    disabled,
+    raised,
+    text,
+    rounded,
+    sizes,
+    children,
+}: ButtonProps) {
+    const router = useRouter();
 
     return (
-        <Button loading={loading} onClick={onClick} className="text-white">
-            {children}
-        </Button>
+        <Button
+            label={children?.toString()}
+            loading={loading}
+            onClick={link ? () => router.push(link) : onClick}
+            className={`${className} text-white`}
+            severity={severity}
+            outlined={outlined}
+            disabled={disabled}
+            raised={raised}
+            text={text}
+            size={sizes}
+            rounded={rounded}
+        />
     );
 }
