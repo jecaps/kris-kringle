@@ -36,16 +36,16 @@ export default function ParticipantsList() {
             ) : (
                 <DataTable value={participants}>
                     <Column
-                        style={{ width: "5em" }}
+                        style={{ width: "17%" }}
                         body={(_, { rowIndex }) => <>{rowIndex + 1}</>}
                     ></Column>
                     <Column
-                        style={{ width: "10em" }}
+                        style={{ width: "33%" }}
                         field="name"
                         header="Name"
                     ></Column>
                     <Column
-                        style={{ width: "15em" }}
+                        style={{ width: "50%" }}
                         field={"wishlist"}
                         header="Wishlist"
                         body={wishlistBodyTemplate}
