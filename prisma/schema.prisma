@@ -14,15 +14,27 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+model Group {
+  id        String   @id @default(uuid())
+  name      String
+  budget    Float
+  dateOfExchange DateTime
+}
 model Participant {
- id        String   @id @default(uuid())
- name      String
- wishlist String[]
+  id        String   @id @default(uuid())
+  name      String
+  email     String  @unique @default("default@email.com")
+  wishlist String[]
 }
 
-
 model SantaMapping {
- id          String   @id @default(uuid())
- santaId     String
- participantId String
+  id          Int   @id @default(autoincrement())
+  santaId     String
+  participantId String
+}
+
+model ParticipantGroupMapping {
+  id            Int      @id @default(autoincrement())
+  groupId       String
+  participantId String
 }
