@@ -90,7 +90,7 @@ export default function ParticipantsPage() {
                             </p>
                             <div className="justify-items-center">
                                 <Btn
-                                    link="/add-participant"
+                                    href="/add-participant"
                                     sizes="small"
                                     severity="help"
                                     rounded

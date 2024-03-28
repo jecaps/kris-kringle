@@ -19,7 +19,7 @@ export default function HomePage() {
                     </p>
                 </div>
                 <div>
-                    <Btn link="/create-group" sizes="large" severity="success">
+                    <Btn href="/create-group" sizes="large" severity="success">
                         Launch Your Gift Exchange
                     </Btn>
                 </div>

@@ -29,7 +29,7 @@ export default function CreateGroupPage() {
             <div className="flex justify-content-center align-items-center">
                 <p className="text-xs text-gray-300">Already have a group?</p>
                 <Btn
-                    link="/join-group"
+                    href="/join-group"
                     className="text-blue-500 ml-2"
                     sizes="small"
                     text

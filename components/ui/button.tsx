@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 
 type ButtonProps = {
     onClick?: () => {} | void;
-    link?: string;
+    href?: string;
     loading?: boolean;
     className?: string;
     severity?: "secondary" | "success" | "info" | "warning" | "danger" | "help";
@@ -20,7 +20,7 @@ type ButtonProps = {
 
 export default function Btn({
     onClick,
-    link,
+    href,
     loading,
     className,
     severity,
@@ -38,7 +38,7 @@ export default function Btn({
         <Button
             label={children?.toString()}
             loading={loading}
-            onClick={link ? () => router.push(link) : onClick}
+            onClick={href ? () => router.push(href) : onClick}
             className={`${className} text-white`}
             severity={severity}
             outlined={outlined}
