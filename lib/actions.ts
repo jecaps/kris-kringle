@@ -11,9 +11,24 @@ export async function addParticipant(_prevState: any, formData: FormData) {
     const name = formData.get("name");
     const wishlist = formData.get("wishlist");
 
-    if (!name || !wishlist) {
+    if (!name && !wishlist) {
         return {
-            error: "Please enter your name and your wishlist",
+            error: {
+                name_error: "Please enter your name.",
+                wishlist_error: "Please enter your wishlist.",
+            },
+        };
+    }
+
+    if (!wishlist) {
+        return {
+            error: { wishlist_error: "Please enter your wishlist." },
+        };
+    }
+
+    if (!name) {
+        return {
+            error: { name_error: "Please enter your name." },
         };
     }
 
@@ -33,6 +48,9 @@ export async function addParticipant(_prevState: any, formData: FormData) {
 }
 
 export async function assignSanta() {
+    // delete all existing santa mappings
+    await prisma.santaMapping.deleteMany();
+
     const participants = await prisma.participant.findMany();
 
     const shuffled = [...participants].sort(() => Math.random() - 0.5);
@@ -56,7 +74,10 @@ export async function assignSanta() {
             },
         });
     }
-    return "Names have been shuffled! You can now pick a name from the list!";
+
+    // send email to each participant with the name and wishlist of the person they are giving a gift to
+
+    return "The names have been shuffled! An email will be sent to each participant of this group with the name and the wishlist of the person they are giving a gift to.";
 }
 
 export async function drawName(_prevState: any, formData: FormData) {
