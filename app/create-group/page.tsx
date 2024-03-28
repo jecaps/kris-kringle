@@ -1,6 +1,5 @@
 import CreateGroup from "@/components/group/create-group";
 import Btn from "@/components/ui/button";
-import { Button } from "primereact/button";
 
 export default function CreateGroupPage() {
     return (
@@ -28,12 +27,7 @@ export default function CreateGroupPage() {
 
             <div className="flex justify-content-center align-items-center">
                 <p className="text-xs text-gray-300">Already have a group?</p>
-                <Btn
-                    href="/join-group"
-                    className="text-blue-500 ml-2"
-                    size="small"
-                    text
-                >
+                <Btn className="text-blue-500" size="small" link>
                     Join a group
                 </Btn>
             </div>

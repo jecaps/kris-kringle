@@ -7,13 +7,13 @@ export default function CreateGroup() {
     return (
         <form className="flex flex-column gap-3 bg-gray-900 p-5 w-5 mx-auto text-left border-round">
             <div>
-                <label htmlFor="groupName" className="block mb-1">
+                <label htmlFor="groupName" className="block mb-1 text-sm">
                     Group Name
                 </label>
                 <InputText className="w-full" name="groupName" id="groupName" />
             </div>
             <div>
-                <label htmlFor="giftBudget" className="block mb-1">
+                <label htmlFor="giftBudget" className="block mb-1 text-sm">
                     Budget for Gift
                 </label>
                 <InputNumber
@@ -23,7 +23,7 @@ export default function CreateGroup() {
                 />
             </div>
             <div>
-                <label htmlFor="exchangeDate" className="block mb-1">
+                <label htmlFor="exchangeDate" className="block mb-1 text-sm">
                     Date of Exchanging Gifts
                 </label>
                 <Calendar
