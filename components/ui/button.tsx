@@ -14,7 +14,8 @@ type ButtonProps = {
     raised?: boolean;
     text?: boolean;
     rounded?: boolean;
-    sizes?: "small" | "large";
+    size?: "small" | "large";
+    link?: boolean;
     children: React.ReactNode;
 };
 
@@ -29,7 +30,8 @@ export default function Btn({
     raised,
     text,
     rounded,
-    sizes,
+    size,
+    link,
     children,
 }: ButtonProps) {
     const router = useRouter();
@@ -45,8 +47,9 @@ export default function Btn({
             disabled={disabled}
             raised={raised}
             text={text}
-            size={sizes}
+            size={size}
             rounded={rounded}
+            link={link}
         />
     );
 }

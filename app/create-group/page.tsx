@@ -31,7 +31,7 @@ export default function CreateGroupPage() {
                 <Btn
                     href="/join-group"
                     className="text-blue-500 ml-2"
-                    sizes="small"
+                    size="small"
                     text
                 >
                     Join a group

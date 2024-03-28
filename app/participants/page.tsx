@@ -91,7 +91,7 @@ export default function ParticipantsPage() {
                             <div className="justify-items-center">
                                 <Btn
                                     href="/add-participant"
-                                    sizes="small"
+                                    size="small"
                                     severity="help"
                                     rounded
                                 >
@@ -109,7 +109,7 @@ export default function ParticipantsPage() {
                             </p>
                             <Btn
                                 onClick={copyLinkHandler}
-                                sizes="small"
+                                size="small"
                                 severity="secondary"
                                 rounded
                                 outlined
