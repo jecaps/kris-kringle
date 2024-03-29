@@ -3,11 +3,15 @@
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
 
-export async function getParticipants() {
-    return await prisma.participant.findMany();
-}
+type PreviousState = {
+    error?: { name_error?: string; wishlist_error?: string } | undefined;
+};
 
-export async function addParticipant(_prevState: any, formData: FormData) {
+type PreviousStateGroup =
+    | { error: string; resetForm?: boolean; message?: undefined }
+    | undefined;
+
+export async function createParticipant(_prevState: any, formData: FormData) {
     const name = formData.get("name");
     const wishlist = formData.get("wishlist");
 
@@ -47,75 +51,80 @@ export async function addParticipant(_prevState: any, formData: FormData) {
     redirect("/");
 }
 
-export async function assignSanta() {
-    // delete all existing santa mappings
+export async function createGroup(
+    _state: PreviousStateGroup,
+    formData: FormData
+) {
+    const name = formData.get("groupName");
+    const budget = formData.get("giftBudget");
+    const dateOfExchange = formData.get("exchangeDate");
+
+    if (!name && !budget && !dateOfExchange) {
+        return {
+            error: "All fields are required.",
+            resetForm: false,
+        };
+    }
+
+    if (!name) {
+        return {
+            error: "Please enter a group name",
+            resetForm: false,
+        };
+    }
+
+    if (!budget) {
+        return {
+            error: "Please enter a budget",
+            resetForm: false,
+        };
+    }
+
+    if (!dateOfExchange) {
+        return {
+            error: "Please enter a date of exchange",
+            resetForm: false,
+        };
+    }
+
+    await prisma.group.create({
+        data: {
+            name: name as string,
+            budget: +budget,
+            dateOfExchange: dateOfExchange as string,
+        },
+    });
+
+    redirect("/add-participant");
+}
+
+export async function createSanta() {
     await prisma.santaMapping.deleteMany();
 
     const participants = await prisma.participant.findMany();
 
-    const shuffled = [...participants].sort(() => Math.random() - 0.5);
+    let shuffled = [...participants].sort(() => Math.random() - 0.5);
 
     for (let i = 0; i < participants.length; i++) {
-        const participant = participants[i];
-        const santa = shuffled[i];
-
-        if (participant.id === santa.id) {
+        if (participants[i].id === shuffled[i].id) {
             const nextIndex = (i + 1) % shuffled.length;
             [shuffled[i], shuffled[nextIndex]] = [
                 shuffled[nextIndex],
                 shuffled[i],
             ];
         }
+    }
 
-        await prisma.santaMapping.create({
+    const createPromises = shuffled.map((santa, i) => {
+        return prisma.santaMapping.create({
             data: {
-                participantId: participant.id,
-                santaId: shuffled[i].id,
+                participantId: participants[i].id,
+                santaId: santa.id,
             },
         });
-    }
+    });
 
-    // send email to each participant with the name and wishlist of the person they are giving a gift to
+    await Promise.all(createPromises);
 
     return "The names have been shuffled! An email will be sent to each participant of this group with the name and the wishlist of the person they are giving a gift to.";
-}
-
-export async function drawName(_prevState: any, formData: FormData) {
-    const name = formData.get("name");
-
-    if (!name) {
-        return {
-            error: "Please enter your name",
-            resetForm: false,
-        };
-    }
-
-    const participant = await prisma.participant.findFirst({
-        where: {
-            name: name as string,
-        },
-    });
-
-    if (!participant) {
-        return {
-            error: `We cannot find '${name}' from the list. Please try again.`,
-            resetForm: true,
-        };
-    }
-
-    const map = await prisma.santaMapping.findFirst({
-        where: {
-            santaId: participant?.id,
-        },
-    });
-
-    const nameDrawn = await prisma.participant.findFirst({
-        where: {
-            id: map?.participantId,
-        },
-    });
-
-    // send nameDrawn to participant.email using 'create-email' action
-
-    return { response: nameDrawn, resetForm: true };
 }
