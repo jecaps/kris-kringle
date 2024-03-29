@@ -1,4 +1,4 @@
-import ParticipantForm from "@/components/participant/participant-form";
+import CreateParticipantForm from "@/components/participant/create-participant";
 
 export default function AddParticipantPage() {
     return (
@@ -8,7 +8,7 @@ export default function AddParticipantPage() {
                 Fill in the form below to participate in the gift exchange.
                 We&apos;re excited to have you join us!
             </p>
-            <ParticipantForm />
+            <CreateParticipantForm />
             <div className="mt-5 w-6">
                 <h2>What&apos;s next?</h2>
                 <p className="text-gray-300">

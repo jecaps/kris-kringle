@@ -11,7 +11,7 @@ function SubmitBtn() {
     return <Btn loading={pending}>{pending ? " Submitting..." : "Submit"}</Btn>;
 }
 
-export default function ParticipantForm() {
+export default function CreateParticipantForm() {
     const [state, formAction] = useFormState(createParticipant, undefined);
 
     return (
