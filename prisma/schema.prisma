@@ -17,8 +17,8 @@ datasource db {
 model Group {
   id        String   @id @default(uuid())
   name      String
-  budget    Float
-  dateOfExchange DateTime
+  budget    Int
+  dateOfExchange String
 }
 model Participant {
   id        String   @id @default(uuid())
