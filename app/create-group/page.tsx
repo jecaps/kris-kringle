@@ -1,4 +1,4 @@
-import CreateGroup from "@/components/group/create-group";
+import CreateGroupForm from "@/components/group/create-group";
 import Btn from "@/components/ui/button";
 
 export default function CreateGroupPage() {
@@ -22,7 +22,7 @@ export default function CreateGroupPage() {
                     Just fill in the details below and click the
                     &quot;Create&quot; button. We&apos;ll take care of the rest!
                 </p>
-                <CreateGroup />
+                <CreateGroupForm />
             </div>
 
             <div className="flex justify-content-center align-items-center">
