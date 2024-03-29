@@ -1,4 +1,5 @@
-import { assignSanta, getParticipants } from "@/lib/actions";
+import { createSanta } from "@/lib/actions";
+import { getParticipants } from "@/lib/data";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -14,7 +15,7 @@ export async function GET() {
 }
 
 export async function POST() {
-    const msg = await assignSanta();
+    const msg = await createSanta();
     return NextResponse.json(
         {
             message: msg,

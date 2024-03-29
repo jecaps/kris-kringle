@@ -2,7 +2,7 @@
 
 import Btn from "../ui/button";
 import { useFormState, useFormStatus } from "react-dom";
-import { addParticipant } from "@/lib/actions";
+import { createParticipant } from "@/lib/actions";
 import { InputText } from "primereact/inputtext";
 
 function SubmitBtn() {
@@ -12,7 +12,7 @@ function SubmitBtn() {
 }
 
 export default function ParticipantForm() {
-    const [state, formAction] = useFormState(addParticipant, undefined);
+    const [state, formAction] = useFormState(createParticipant, undefined);
 
     return (
         <div className="surface-0 p-4 shadow-2 border-round w-5 m-auto text-left">
