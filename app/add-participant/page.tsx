@@ -2,7 +2,7 @@ import CreateParticipantForm from "@/components/participant/create-participant";
 
 export default function AddParticipantPage() {
     return (
-        <div className="flex flex-column align-items-center justify-content-evenly mt-5 text-center">
+        <div className="flex flex-column align-items-center justify-content-center gap-6 mt-5 text-center h-screen">
             <h1>Join the exchanging of gifts!</h1>
             <p className="text-gray-400">
                 Fill in the form below to participate in the gift exchange.
