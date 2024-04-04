@@ -20,12 +20,14 @@ model Group {
   password  String
   budget    Int
   dateOfExchange String
+  participants Participant[]
 }
 model Participant {
   id        String   @id @default(uuid())
   name      String
   email     String  
   wishlist String[]
+  group     Group   @relation(fields: [id], references: [id])
 }
 
 model SantaMapping {
