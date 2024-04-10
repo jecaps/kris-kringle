@@ -20,18 +20,20 @@ model Group {
   password  String
   budget    Int
   dateOfExchange String
-  participants Participant[]
-}
+  participants Participant[] 
+  }
 model Participant {
   id        String   @id @default(uuid())
   name      String
   email     String  
   wishlist String[]
-  group     Group   @relation(fields: [id], references: [id])
+  groupId  String
+  group Group @relation(fields: [groupId], references: [id])
 }
 
 model SantaMapping {
   id          Int   @id @default(autoincrement())
   santaId     String
   participantId String
+  groupId     String
 }
