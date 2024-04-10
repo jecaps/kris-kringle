@@ -1,9 +1,8 @@
-import CreateGroupForm from "@/components/group/create-group";
-import Btn from "@/components/ui/button";
+import CreateGroupForm from "@/components/groups/create-group";
 
 export default function CreateGroupPage() {
     return (
-        <div className="flex flex-column justify-content-center gap-8 text-center h-screen">
+        <div className="flex flex-column justify-content-center gap-8 text-center w-full h-screen">
             <div>
                 <h1 className="text-6xl mb-1">
                     Start Your Own Gift Exchange Group!
@@ -23,13 +22,6 @@ export default function CreateGroupPage() {
                     &quot;Create&quot; button. We&apos;ll take care of the rest!
                 </p>
                 <CreateGroupForm />
-            </div>
-
-            <div className="flex justify-content-center align-items-center">
-                <p className="text-xs text-gray-300">Already have a group?</p>
-                <Btn className="text-blue-500" size="small" link>
-                    Join a group
-                </Btn>
             </div>
         </div>
     );

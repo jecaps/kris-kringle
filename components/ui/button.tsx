@@ -16,6 +16,7 @@ type ButtonProps = {
     rounded?: boolean;
     size?: "small" | "large";
     link?: boolean;
+    icon?: string;
     children: React.ReactNode;
 };
 
@@ -32,13 +33,13 @@ export default function Btn({
     rounded,
     size,
     link,
+    icon,
     children,
 }: ButtonProps) {
     const router = useRouter();
 
     return (
         <Button
-            label={children?.toString()}
             loading={loading}
             onClick={href ? () => router.push(href) : onClick}
             className={`${className} text-white`}
@@ -50,6 +51,9 @@ export default function Btn({
             size={size}
             rounded={rounded}
             link={link}
-        />
+            icon={icon}
+        >
+            {children}
+        </Button>
     );
 }
