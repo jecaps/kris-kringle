@@ -21,7 +21,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <PrimeReactProvider>
-                <body className={`${inter.className} mx-auto w-8 h-screen`}>
+                <body className={`${inter.className} md:mx-auto md:w-8`}>
                     {children}
                 </body>
             </PrimeReactProvider>
