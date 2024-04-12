@@ -29,12 +29,14 @@ export default async function GroupPage({
             </div>
             <div className="md:w-6 mx-auto">
                 <h2 className="md:text-4xl m-0">Participants</h2>
-                <ShuffleButton id={params.id} />
                 {group?.participants.length ? (
-                    <p className="text-gray-400 text-sm">
-                        Here are all the amazing people participating in our
-                        gift exchange!
-                    </p>
+                    <div className="flex justify-content-between">
+                        <p className="text-gray-400 text-sm">
+                            Here are all the amazing people participating in our
+                            gift exchange!
+                        </p>
+                        <ShuffleButton id={params.id} />
+                    </div>
                 ) : (
                     <p className="text-gray-400 text-sm">
                         No Participants yet. Click join to join the group or you
