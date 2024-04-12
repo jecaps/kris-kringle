@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { fetchGroupParticipants } from "./data";
+import { shuffleParticipants } from "./utils";
 
 export async function createParticipant(
     id: string,
@@ -88,6 +89,7 @@ export async function createGroupSantaMapping(id: string) {
             data: {
                 participantId: participants[i].id,
                 santaId: santa.id,
+                groupId: id,
             },
         });
     });

@@ -5,7 +5,7 @@ interface Participant {
     wishlist: string[];
 }
 
-function shuffleParticipants(participants: Participant[]) {
+export function shuffleParticipants(participants: Participant[]) {
     const shuffled = [...participants].sort(() => Math.random() - 0.5);
 
     for (let i = 0; i < participants.length; i++) {
