@@ -77,38 +77,36 @@ export default function ParticipantsList({
             </DataTable>
 
             <div className="flex flex-column align-items-center gap-2 text-center mt-4">
-                <div className="flex flex-column align-items-center md:w-6">
+                <div className="flex flex-column align-items-center w-full">
                     <p className="text-sm">
                         It&apos;s not too late to join the gift exchange. Add
                         your name to the list now!
                     </p>
                     <Btn
+                        icon="pi pi-plus"
                         className="md:w-3 w-9 justify-content-center gap-1"
                         onClick={openDialogHandler}
                         size="small"
                         severity="help"
                         rounded
                     >
-                        Join the Group
+                        Join Group
                     </Btn>
                 </div>
-                <div className="flex flex-column align-items-center">
+                <div className="flex flex-column align-items-center w-full">
                     <p className="text-sm">
                         Know someone who would be interested? Invite them to
-                        join the gift exchange by sharing the link below.
-                    </p>
-                    <p className="text-sm text-left text-gray-300 border-round border-2 border-100 p-2 m-0">
-                        {url}
+                        join the gift exchange by the share link button.
                     </p>
                     <Btn
-                        icon="pi pi-copy"
+                        icon="pi pi-link"
                         className="md:w-3 w-9 justify-content-center gap-1 mt-2"
                         onClick={copyLinkHandler}
                         size="small"
                         severity="secondary"
                         rounded
                     >
-                        Copy Link
+                        Share Link
                     </Btn>
                 </div>
             </div>

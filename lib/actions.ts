@@ -3,7 +3,7 @@
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { fetchGroupParticipants } from "./data";
+import { fetchGroupParticipants, deleteSantaMapping } from "./data";
 import { shuffleParticipants } from "./utils";
 
 export async function createParticipant(
@@ -80,6 +80,7 @@ export async function createGroup(_state: any, formData: FormData) {
 }
 
 export async function createGroupSantaMapping(id: string) {
+    await deleteSantaMapping(id);
     const participants = await fetchGroupParticipants(id);
 
     const shuffledParticipants = shuffleParticipants(participants);

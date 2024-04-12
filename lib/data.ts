@@ -71,10 +71,10 @@ export async function deletePariticipant(groupId: string) {
     });
 }
 
-// export async function deleteSantaMapping(groupId: string) {
-//     return await prisma.santaMapping.deleteMany({
-//         where: {
-//             groupId: groupId,
-//         }
-//     })
-// }
+export async function deleteSantaMapping(groupId: string) {
+    return await prisma.santaMapping.deleteMany({
+        where: {
+            groupId: groupId,
+        },
+    });
+}
