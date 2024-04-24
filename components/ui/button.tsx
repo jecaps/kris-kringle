@@ -17,7 +17,8 @@ type ButtonProps = {
     size?: "small" | "large";
     link?: boolean;
     icon?: string;
-    children: React.ReactNode;
+    style?: React.CSSProperties;
+    children?: React.ReactNode;
 };
 
 export default function Btn({
@@ -35,6 +36,7 @@ export default function Btn({
     link,
     icon,
     children,
+    style,
 }: ButtonProps) {
     const router = useRouter();
 
@@ -52,6 +54,7 @@ export default function Btn({
             rounded={rounded}
             link={link}
             icon={icon}
+            style={style}
         >
             {children}
         </Button>

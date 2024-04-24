@@ -3,10 +3,10 @@
 import prisma from "./db";
 
 interface Group {
-    name: string;
-    budget: number;
-    password: string;
-    dateOfExchange: string;
+    name?: string;
+    budget?: number;
+    password?: string;
+    dateOfExchange?: string;
 }
 
 interface Participant {
@@ -34,7 +34,7 @@ export async function fetchGroupParticipants(id: string) {
     });
 }
 
-export async function UpdateGroup(groupId: string, groupData: Group) {
+export async function updateGroup(groupId: string, groupData: Group) {
     return await prisma.group.update({
         where: {
             id: groupId,
@@ -43,7 +43,7 @@ export async function UpdateGroup(groupId: string, groupData: Group) {
     });
 }
 
-export async function UpdateParticipant(
+export async function updateParticipant(
     participantId: string,
     participantData: Participant
 ) {

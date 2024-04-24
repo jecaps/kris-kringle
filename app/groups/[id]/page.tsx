@@ -1,6 +1,6 @@
 import ParticipantsList from "@/components/participants/participants-list";
 import { fetchGroup } from "@/lib/data";
-import { ShuffleButton } from "@/components/groups/buttons";
+import { SettingsButton, ShuffleButton } from "@/components/groups/buttons";
 
 export default async function GroupPage({
     params,
@@ -15,7 +15,12 @@ export default async function GroupPage({
                 className="flex flex-column justify-content-end"
                 style={{ height: "16.67" }}
             >
-                <h1 className="md:text-6xl m-0">{group?.name}</h1>
+                <div className="relative">
+                    <h1 className="md:text-6xl m-0 text-center">
+                        {group?.name}
+                    </h1>
+                    <SettingsButton id={params.id} />
+                </div>
                 <div className="grid text-center">
                     <span className="col-6 pi pi-gift"></span>
                     <span className="col-6 pi pi-calendar"></span>
