@@ -1,18 +1,52 @@
 "use client";
 
+import { useFormState, useFormStatus } from "react-dom";
+import { useEffect, useRef } from "react";
 import { createGroupSantaMapping } from "@/lib/actions";
-import { Button } from "primereact/button";
+import { Toast } from "primereact/toast";
 import Btn from "../ui/button";
 
-export function ShuffleButton({ id }: { id: string }) {
-    const createSantaMapping = createGroupSantaMapping.bind(null, id);
+function SubmitButton() {
+    const { pending } = useFormStatus();
 
     return (
-        <form action={createSantaMapping}>
-            <Button size="small" rounded text>
-                Assign Secret Santas
-            </Button>
-        </form>
+        <Btn
+            size="small"
+            loading={pending}
+            severity="secondary"
+            rounded
+            text
+            className={pending ? "justify-content-center gap-2" : ""}
+        >
+            {pending ? "Assigning" : "Assign Secret Santas"}
+        </Btn>
+    );
+}
+
+export function ShuffleButton({ id }: { id: string }) {
+    const toast = useRef<Toast>(null);
+
+    const createSantaMapping = createGroupSantaMapping.bind(null, id);
+    const [state, dispatch] = useFormState(createSantaMapping, undefined);
+
+    useEffect(() => {
+        if (state) {
+            toast.current?.show({
+                severity: "success",
+                detail: state.message,
+                life: 5000,
+            });
+            console.log(state.message);
+        }
+    });
+
+    return (
+        <>
+            <form action={dispatch}>
+                <SubmitButton />
+            </form>
+            <Toast ref={toast} position="bottom-center" />
+        </>
     );
 }
 
