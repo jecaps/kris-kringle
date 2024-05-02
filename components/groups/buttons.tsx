@@ -36,7 +36,6 @@ export function ShuffleButton({ id }: { id: string }) {
                 detail: state.message,
                 life: 5000,
             });
-            console.log(state.message);
         }
     });
 

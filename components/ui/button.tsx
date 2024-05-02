@@ -15,8 +15,10 @@ type ButtonProps = {
     text?: boolean;
     rounded?: boolean;
     size?: "small" | "large";
+    plain?: boolean;
     link?: boolean;
     icon?: string;
+    type?: "button" | "submit" | "reset";
     style?: React.CSSProperties;
     children?: React.ReactNode;
 };
@@ -33,8 +35,10 @@ export default function Btn({
     text,
     rounded,
     size,
+    plain,
     link,
     icon,
+    type,
     children,
     style,
 }: ButtonProps) {
@@ -51,10 +55,12 @@ export default function Btn({
             raised={raised}
             text={text}
             size={size}
+            plain={plain}
             rounded={rounded}
             link={link}
             icon={icon}
             style={style}
+            type={type}
         >
             {children}
         </Button>

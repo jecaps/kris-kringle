@@ -1,13 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import prisma from "./db";
-
-interface Group {
-    name?: string;
-    budget?: number;
-    password?: string;
-    dateOfExchange?: string;
-}
 
 interface Participant {
     name: string;
@@ -34,13 +28,33 @@ export async function fetchGroupParticipants(id: string) {
     });
 }
 
-export async function updateGroup(groupId: string, groupData: Group) {
-    return await prisma.group.update({
-        where: {
-            id: groupId,
-        },
-        data: groupData,
-    });
+export async function updateGroup(
+    groupId: string,
+    _state: any,
+    groupData: FormData
+) {
+    try {
+        const name = groupData.get("name");
+        const budget = groupData.get("budget");
+        const dateOfExchange = groupData.get("exchangeDate");
+
+        await prisma.group.update({
+            where: {
+                id: groupId,
+            },
+            data: {
+                name: name as string,
+                budget: Number(budget),
+                dateOfExchange: dateOfExchange as string,
+            },
+        });
+
+        revalidatePath(`/groups/${groupId}`, "page");
+        return { message: "Changes saved!" };
+    } catch (error) {
+        console.error(`Failed to update group: ${error}`);
+        throw error;
+    }
 }
 
 export async function updateParticipant(

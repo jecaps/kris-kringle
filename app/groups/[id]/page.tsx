@@ -1,6 +1,8 @@
-import ParticipantsList from "@/components/participants/participants-list";
 import { fetchGroup } from "@/lib/data";
 import { SettingsButton, ShuffleButton } from "@/components/groups/buttons";
+import ParticipantsList from "@/components/participants/participants-list";
+import { notFound } from "next/navigation";
+import GroupHeader from "@/components/groups/header";
 
 export default async function GroupPage({
     params,
@@ -9,32 +11,16 @@ export default async function GroupPage({
 }) {
     const group = await fetchGroup(params.id);
 
+    if (!group) {
+        notFound();
+    }
+
     return (
         <div className="flex flex-column align-items-center justify-content-center w-full h-screen gap-6">
-            <div
-                className="flex flex-column justify-content-end"
-                style={{ height: "16.67" }}
-            >
-                <div className="relative">
-                    <h1 className="md:text-6xl m-0 text-center">
-                        {group?.name}
-                    </h1>
-                    <SettingsButton id={params.id} />
-                </div>
-                <div className="grid text-center">
-                    <span className="col-6 pi pi-gift"></span>
-                    <span className="col-6 pi pi-calendar"></span>
-                    <p className="col-6 p-0 m-0 text-gray-400 text-xs">
-                        Amount: {group?.budget}
-                    </p>
-                    <p className="col-6 p-0 m-0 text-gray-400 text-xs">
-                        Date: {group?.dateOfExchange}
-                    </p>
-                </div>
-            </div>
+            <GroupHeader group={group} />
             <div className="md:w-6 mx-auto">
                 <h2 className="md:text-4xl m-0">Participants</h2>
-                {group?.participants.length ? (
+                {group.participants.length ? (
                     <div className="flex justify-content-between">
                         <p className="text-gray-400 text-sm">
                             Here are all the amazing people participating in our
@@ -50,7 +36,7 @@ export default async function GroupPage({
                 )}
                 <ParticipantsList
                     id={params.id}
-                    participants={group?.participants}
+                    participants={group.participants}
                 />
             </div>
         </div>
