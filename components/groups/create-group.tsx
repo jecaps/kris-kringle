@@ -12,7 +12,7 @@ function SubmitBtn() {
     const { pending } = useFormStatus();
 
     return (
-        <Btn className="w-6 mx-auto" loading={pending}>
+        <Btn className="w-6 mx-auto justify-content-center" loading={pending}>
             {pending ? " Creating" : "Create"}
         </Btn>
     );
