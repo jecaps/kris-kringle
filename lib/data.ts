@@ -71,6 +71,18 @@ export async function updateParticipant(
 }
 
 export async function deleteGroup(groupId: string) {
+    await prisma.santaMapping.deleteMany({
+        where: {
+            groupId: groupId,
+        },
+    });
+
+    await prisma.participant.deleteMany({
+        where: {
+            groupId: groupId,
+        },
+    });
+
     await prisma.group.delete({
         where: {
             id: groupId,
