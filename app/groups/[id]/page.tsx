@@ -1,5 +1,5 @@
 import { fetchGroup } from "@/lib/data";
-import { SettingsButton, ShuffleButton } from "@/components/groups/buttons";
+import { ShuffleButton } from "@/components/groups/buttons";
 import ParticipantsList from "@/components/participants/participants-list";
 import { notFound } from "next/navigation";
 import GroupHeader from "@/components/groups/header";

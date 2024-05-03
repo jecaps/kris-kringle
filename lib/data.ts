@@ -1,7 +1,8 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import prisma from "./db";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 interface Participant {
     name: string;
@@ -70,11 +71,13 @@ export async function updateParticipant(
 }
 
 export async function deleteGroup(groupId: string) {
-    return await prisma.group.delete({
+    await prisma.group.delete({
         where: {
             id: groupId,
         },
     });
+
+    redirect("/");
 }
 
 export async function deletePariticipant(groupId: string) {
