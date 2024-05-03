@@ -33,6 +33,7 @@ export default function GroupHeader({ group }: { group: Group }) {
     const editName = updateGroup.bind(null, group.id);
     const [state, dispatch] = useFormState(editName, undefined);
     const [allowEdit, setAllowEdit] = useState(false);
+    const [enteredDate, setEnteredDate] = useState<Date>();
 
     useEffect(() => {
         if (state) {
@@ -102,7 +103,10 @@ export default function GroupHeader({ group }: { group: Group }) {
                             id="exchangeDate"
                             name="exchangeDate"
                             dateFormat="dd/mm/yy"
-                            value={new Date(reformattedDate)}
+                            value={enteredDate || new Date(reformattedDate)}
+                            onChange={(e) => {
+                                setEnteredDate(e.value || undefined);
+                            }}
                         />
                         <label htmlFor="exchangeDate">Exchange Date</label>
                     </span>
