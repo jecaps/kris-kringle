@@ -1,20 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { Participant } from "@prisma/client";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Button } from "primereact/button";
 
 import Btn from "../ui/button";
 import CreateParticipantForm from "./create-participant";
-
-interface Participant {
-    id: string;
-    email: string;
-    name: string;
-    wishlist: string[];
-}
+import EditParticipant from "./edit-participant";
 
 export default function ParticipantsList({
     id,
@@ -25,17 +21,9 @@ export default function ParticipantsList({
 }) {
     const toast = useRef<Toast>(null);
     const [visible, setVisible] = useState(false);
-    const [url, setUrl] = useState("");
-
-    function openDialogHandler() {
-        window.history.pushState({}, "", `?dialog=true`);
-        setVisible(true);
-    }
-
-    function closeDialogHandler() {
-        window.history.pushState({}, "", `/groups/${id}`);
-        setVisible(false);
-    }
+    const [editVisible, setEditVisible] = useState(false);
+    const [editingParticipant, setEditingParticipant] =
+        useState<Participant | null>(null);
 
     function copyLinkHandler() {
         navigator.clipboard.writeText(window.location.origin + `/groups/${id}`);
@@ -48,32 +36,60 @@ export default function ParticipantsList({
         }
     }
 
-    function wishlistBodyTemplate(rowData: Participant) {
-        return <>{rowData.wishlist.join(", ")}</>;
+    function wishlistBodyTemplate(participant: Participant) {
+        return <>{participant.wishlist.join(", ")}</>;
     }
 
-    useEffect(() => {
-        setUrl(window.location.origin + `/groups/${id}`);
-    }, []);
+    function editButton(participant: Participant) {
+        const openEditDialog = () => {
+            setEditingParticipant(participant);
+            setEditVisible(true);
+        };
+
+        const closeEditDialog = () => {
+            setEditVisible(false);
+        };
+
+        return (
+            <>
+                <Button
+                    className="w-2rem h-2rem p-0 focus:shadow-none"
+                    icon="pi pi-pencil"
+                    onClick={openEditDialog}
+                    style={{ backgroundColor: "transparent" }}
+                    text
+                />
+                <Dialog
+                    header="Edit Participant Details"
+                    visible={editVisible}
+                    onHide={closeEditDialog}
+                    className="md:w-3"
+                >
+                    <EditParticipant
+                        groupId={id}
+                        participant={editingParticipant}
+                        closeEditDialog={closeEditDialog}
+                    />
+                </Dialog>
+            </>
+        );
+    }
 
     return (
         <>
             <DataTable value={participants} size="small">
                 <Column
-                    style={{ width: "17%" }}
+                    className="w-12rem"
                     body={(_, { rowIndex }) => <>{rowIndex + 1}</>}
                 ></Column>
+                <Column className="w-20rem" field="name" header="Name"></Column>
                 <Column
-                    style={{ width: "33%" }}
-                    field="name"
-                    header="Name"
-                ></Column>
-                <Column
-                    style={{ width: "50%" }}
+                    className="w-30rem"
                     field={"wishlist"}
                     header="Wishlist"
                     body={wishlistBodyTemplate}
                 ></Column>
+                <Column body={editButton} className="w-12rem"></Column>
             </DataTable>
 
             <div className="flex flex-column align-items-center gap-2 text-center mt-4">
@@ -85,7 +101,7 @@ export default function ParticipantsList({
                     <Btn
                         icon="pi pi-plus"
                         className="md:w-3 w-9 justify-content-center gap-1"
-                        onClick={openDialogHandler}
+                        onClick={() => setVisible(true)}
                         size="small"
                         severity="help"
                         rounded
@@ -114,14 +130,15 @@ export default function ParticipantsList({
             <Dialog
                 header="Add Member"
                 visible={visible}
-                onHide={closeDialogHandler}
+                onHide={() => setVisible(false)}
                 className="md:w-3"
             >
                 <CreateParticipantForm
                     id={id}
-                    closeDialog={closeDialogHandler}
+                    closeDialog={() => setVisible(false)}
                 />
             </Dialog>
+
             <Toast ref={toast} />
         </>
     );
