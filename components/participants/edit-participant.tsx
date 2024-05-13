@@ -21,7 +21,7 @@ function SubmitButton() {
             size="small"
             rounded
         >
-            Save
+            {pending? "Saving" :"Save"}
         </Btn>
     );
 }
@@ -99,15 +99,6 @@ export default function EditParticipant({
                         Close
                     </Btn>
                     <SubmitButton />
-                    {/* <Btn
-                        type="submit"
-                        icon="pi pi-check"
-                        className="md:w-3 w-9 justify-content-center gap-1"
-                        size="small"
-                        rounded
-                    >
-                        Save
-                    </Btn> */}
                 </div>
             </form>
             <Toast ref={toast} />
