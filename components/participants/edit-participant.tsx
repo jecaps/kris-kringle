@@ -89,14 +89,14 @@ export default function EditParticipant({
                 <div className="col-12 flex justify-content-center gap-2">
                     <Btn
                         type="button"
-                        icon="pi pi-check"
+                        icon="pi pi-times"
                         className="md:w-3 w-9 justify-content-center gap-1"
                         size="small"
                         onClick={closeEditDialog}
                         outlined
                         rounded
                     >
-                        Close
+                        Cancel
                     </Btn>
                     <SubmitButton />
                 </div>
