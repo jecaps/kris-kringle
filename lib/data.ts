@@ -4,12 +4,6 @@ import prisma from "./db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-interface Participant {
-    name: string;
-    email: string;
-    wishlist: string[];
-}
-
 export async function fetchGroup(id: string) {
     return await prisma.group.findUnique({
         where: {
