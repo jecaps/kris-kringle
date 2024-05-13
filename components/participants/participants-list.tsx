@@ -20,7 +20,7 @@ export default function ParticipantsList({
     participants: Participant[] | undefined;
 }) {
     const toast = useRef<Toast>(null);
-    const [visible, setVisible] = useState(false);
+    const [createVisible, setCreateVisible] = useState(false);
     const [editVisible, setEditVisible] = useState(false);
     const [editingParticipant, setEditingParticipant] =
         useState<Participant | null>(null);
@@ -89,7 +89,7 @@ export default function ParticipantsList({
                     header="Wishlist"
                     body={wishlistBodyTemplate}
                 ></Column>
-                <Column body={editButton} className="w-12rem"></Column>
+                <Column body={editButton} className="w-3rem"></Column>
             </DataTable>
 
             <div className="flex flex-column align-items-center gap-2 text-center mt-4">
@@ -101,7 +101,7 @@ export default function ParticipantsList({
                     <Btn
                         icon="pi pi-plus"
                         className="md:w-3 w-9 justify-content-center gap-1"
-                        onClick={() => setVisible(true)}
+                        onClick={() => setCreateVisible(true)}
                         size="small"
                         severity="help"
                         rounded
@@ -129,13 +129,13 @@ export default function ParticipantsList({
 
             <Dialog
                 header="Add Member"
-                visible={visible}
-                onHide={() => setVisible(false)}
+                visible={createVisible}
+                onHide={() => setCreateVisible(false)}
                 className="md:w-3"
             >
                 <CreateParticipantForm
                     id={id}
-                    closeDialog={() => setVisible(false)}
+                    closeDialog={() => setCreateVisible(false)}
                 />
             </Dialog>
 
