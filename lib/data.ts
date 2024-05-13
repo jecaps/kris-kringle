@@ -4,12 +4,6 @@ import prisma from "./db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-interface Participant {
-    name: string;
-    email: string;
-    wishlist: string[];
-}
-
 export async function fetchGroup(id: string) {
     return await prisma.group.findUnique({
         where: {
@@ -59,15 +53,32 @@ export async function updateGroup(
 }
 
 export async function updateParticipant(
+    groupId: string,
     participantId: string,
-    participantData: Participant
+    _state: any,
+    participantData: any
 ) {
-    return await prisma.participant.update({
-        where: {
-            id: participantId,
-        },
-        data: participantData,
-    });
+    const name = participantData.get("name");
+    const email = participantData.get("email");
+    const wishlist = participantData.get("wishlist");
+
+    try {
+        await prisma.participant.update({
+            where: {
+                id: participantId,
+            },
+            data: {
+                name: name as string,
+                email: email as string,
+                wishlist: wishlist.split(", "),
+            },
+        });
+        revalidatePath(`/groups/${groupId}`, "page");
+        return { message: "Changes saved!" };
+    } catch (error) {
+        console.error(error);
+        return { error: "An error occurred while updating changes." };
+    }
 }
 
 export async function deleteGroup(groupId: string) {
