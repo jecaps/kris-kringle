@@ -57,6 +57,7 @@ export default function ParticipantsList({
                     icon="pi pi-pencil"
                     onClick={openEditDialog}
                     style={{ backgroundColor: "transparent" }}
+                    size="small"
                     text
                 />
                 <Dialog
