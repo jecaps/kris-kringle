@@ -9,8 +9,8 @@ function SubmitBtn() {
     const { pending } = useFormStatus();
 
     return (
-        <Btn size="small" loading={pending} rounded>
-            {pending ? " Submitting" : "Submit"}
+        <Btn className="justify-content-center gap-2" size="small" loading={pending} rounded>
+            {pending ? "Submitting" : "Submit"}
         </Btn>
     );
 }
@@ -92,7 +92,7 @@ export default function CreateParticipantForm({
                                 {state.message}
                             </h3>
                             <Btn
-                                className="w-6 mt-2"
+                                className="w-6 mt-2 justify-content-center"
                                 onClick={closeDialog}
                                 size="small"
                                 rounded
