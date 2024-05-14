@@ -113,7 +113,7 @@ export default function ParticipantsList({
                 <div className="flex flex-column align-items-center w-full">
                     <p className="text-sm">
                         Know someone who would be interested? Invite them to
-                        join the gift exchange by the share link button.
+                        join the gift exchange by clicking the share link button below.
                     </p>
                     <Btn
                         icon="pi pi-link"
