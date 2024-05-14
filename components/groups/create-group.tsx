@@ -2,7 +2,6 @@
 
 import Btn from "@/components/ui/button";
 import { InputText } from "primereact/inputtext";
-import { InputNumber } from "primereact/inputnumber";
 import { Calendar } from "primereact/calendar";
 import { useFormState, useFormStatus } from "react-dom";
 import { createGroup } from "@/lib/actions";
@@ -89,11 +88,11 @@ export default function CreateGroupForm() {
                     >
                         Budget for Gift
                     </label>
-                    <InputNumber
+                    <InputText
+                        keyfilter="int"
                         className={`${state?.error ? "p-invalid" : ""} w-full`}
                         name="budget"
                         id="budget"
-                        locale="en-US"
                     />
                 </div>
                 <div className="col-6">

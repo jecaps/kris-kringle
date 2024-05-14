@@ -4,7 +4,6 @@ import { Group } from "@prisma/client";
 import { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { InputText } from "primereact/inputtext";
-import { InputNumber } from "primereact/inputnumber";
 import { Calendar } from "primereact/calendar";
 import { Toast } from "primereact/toast";
 import { TieredMenu } from "primereact/tieredmenu";
@@ -84,11 +83,12 @@ export default function GroupHeader({ group }: { group: Group }) {
                         <label htmlFor="name">Group Name</label>
                     </span>
                     <span className="p-float-label">
-                        <InputNumber
+                        <InputText
+                            keyfilter="int"
                             className="p-inputtext-sm"
                             id="budget"
                             name="budget"
-                            value={budget}
+                            defaultValue={budget}
                         />
                         <label htmlFor="budget">Budget</label>
                     </span>
@@ -137,7 +137,7 @@ export default function GroupHeader({ group }: { group: Group }) {
                         <span className="col-6 pi pi-gift"></span>
                         <span className="col-6 pi pi-calendar"></span>
                         <p className="col-6 p-0 m-0 text-gray-400 text-xs">
-                            Amount: {budget}
+                            Amount: {budget.toLocaleString()}
                         </p>
                         <p className="col-6 p-0 m-0 text-gray-400 text-xs">
                             Date: {dateOfExchange}
