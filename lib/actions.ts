@@ -53,15 +53,9 @@ export async function createGroup(_state: any, formData: FormData) {
     const budget = formData.get("budget");
     const dateOfExchange = formData.get("exchangeDate");
     const password = formData.get("password");
-    const reenterPassword = formData.get("reenterPassword");
+    const reenterPassword = formData.get("reenterPassword")
 
-    if (password !== reenterPassword) {
-        return {
-            error: "Passwords do not match.",
-        };
-    }
-
-    if (!name || !budget || !dateOfExchange || !password) {
+    if (!name || !budget || !dateOfExchange || !password || !reenterPassword) {
         return {
             error: "All fields are required.",
         };
