@@ -1,9 +1,11 @@
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createGroupSantaMapping } from "@/lib/actions";
 import { Toast } from "primereact/toast";
+import { Dialog } from "primereact/dialog";
+import CreateParticipantForm from "../participants/create-participant";
 import Btn from "../ui/button";
 
 function SubmitButton() {
@@ -60,4 +62,65 @@ export function SettingsButton({ id }: { id: string }) {
             href={`/groups/${id}/edit`}
         ></Btn>
     );
+}
+
+export function JoinGroupButton({id} : {id: string}) {
+    const [createVisible, setCreateVisible] = useState(false);
+
+    return (
+        <>
+            <Btn
+                icon="pi pi-plus"
+                className="md:w-3 w-9 justify-content-center gap-1"
+                onClick={() => setCreateVisible(true)}
+                size="small"
+                severity="help"
+                rounded
+                >
+                Join Group
+            </Btn>
+            <Dialog
+                header="Add Member"
+                visible={createVisible}
+                onHide={() => setCreateVisible(false)}
+                className="md:w-3"
+            >
+                <CreateParticipantForm
+                    id={id}
+                    closeDialog={() => setCreateVisible(false)}
+                />
+            </Dialog>
+        </>
+    )
+}
+
+export function ShareLinkButton({id} : {id: string}) {
+    const toast = useRef<Toast>(null);
+    
+    function copyLinkHandler() {
+        navigator.clipboard.writeText(window.location.origin + `/groups/${id}`);
+        if (toast.current) {
+            toast.current.show({
+                severity: "success",
+                detail: "Link copied. Share with your friends!",
+                life: 5000,
+            });
+        }
+    }
+    
+    return (
+        <>
+            <Btn
+                icon="pi pi-link"
+                className="md:w-3 w-9 justify-content-center gap-1"
+                onClick={copyLinkHandler}
+                size="small"
+                severity="secondary"
+                rounded
+                >
+                Share Link
+            </Btn>
+            <Toast ref={toast} />
+        </>
+    )
 }
