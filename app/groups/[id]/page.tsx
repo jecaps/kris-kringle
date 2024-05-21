@@ -53,7 +53,7 @@ export default async function GroupPage({
                         <p className="text-gray-400 text-sm">
                             No Participants yet. You can either join the group or share the link others can join the Gift Exchange too!
                         </p>
-                        <div className="flex gap-2">
+                        <div className="flex justify-content-center gap-2">
                             <JoinGroupButton id={params.id} />
                             <ShareLinkButton id={params.id} />
                         </div>
