@@ -103,12 +103,17 @@ export async function deleteGroup(groupId: string) {
     redirect("/");
 }
 
-export async function deletePariticipant(groupId: string) {
-    return await prisma.participant.delete({
+export async function deleteParticipant(
+    groupId: string,
+    participantId: string
+) {
+    await prisma.participant.delete({
         where: {
-            id: groupId,
+            id: participantId,
         },
     });
+
+    revalidatePath(`/groups/${groupId}`, "page");
 }
 
 export async function deleteSantaMapping(groupId: string) {
