@@ -25,3 +25,5 @@ https://github.com/jecaps/kris-kringle/assets/76426580/cc6e44d2-4688-4874-8390-e
 - **Database:** PostgreSQL
 - **ORM:** Prisma
 - **Hosting:** Vercel
+- **Email Service:** Nodemail
+
