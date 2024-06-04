@@ -4,6 +4,8 @@
 
 Welcome to Kris Kringle Online! 🎅✨ This project is designed to help you and your group organize a fun and hassle-free Kris Kringle (Secret Santa) gift exchange online. Perfect for families, friends, or coworkers looking to spread some joy!
 
+> **Note:** The site is still under construction and currently optimized for desktop monitors. Mobile support and additional features are coming soon!
+
 ## Features
 - **Easy Group Creation:** Set up your Kris Kringle group in just a few steps.
 - **Participant Management:** Effortlessly add or invite participants.
