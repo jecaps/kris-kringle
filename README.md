@@ -1,3 +1,5 @@
+![kriskringle](https://github.com/jecaps/kris-kringle/assets/76426580/e8da4ab2-a1b0-40e4-98bf-6fc8128f749b)
+
 # Kris Kringle Online
 
 Welcome to Kris Kringle Online! 🎅✨ This project is designed to help you and your group organize a fun and hassle-free Kris Kringle (Secret Santa) gift exchange online. Perfect for families, friends, or coworkers looking to spread some joy!
