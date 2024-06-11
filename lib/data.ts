@@ -23,6 +23,49 @@ export async function fetchGroupParticipants(id: string) {
     });
 }
 
+export async function fetchParticipant(participantId: string) {
+    return await prisma.participant.findFirst({
+        where: {
+            id: participantId,
+        },
+    });
+}
+
+export async function fetchSantaMapping(id: string) {
+    const santaMap = await prisma.santaMapping.findMany({
+        where: {
+            groupId: id,
+        },
+    });
+
+    const group = await fetchGroup(id);
+
+    const result = await Promise.all(
+        santaMap.map(async (item) => {
+            const santa = await prisma.participant.findUnique({
+                where: {
+                    id: item.santaId,
+                },
+            });
+
+            const buddy = await prisma.participant.findUnique({
+                where: {
+                    id: item.participantId,
+                },
+            });
+
+            return {
+                santaName: santa?.name,
+                santaEmail: santa?.email,
+                receiver: buddy?.name,
+                receiverWishlist: buddy?.wishlist,
+            };
+        })
+    );
+
+    return { group, result };
+}
+
 export async function updateGroup(
     groupId: string,
     _state: any,

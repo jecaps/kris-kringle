@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { fetchGroupParticipants, deleteSantaMapping } from "./data";
-import { shuffleParticipants } from "./utils";
+import { sendEmail, shuffleParticipants } from "./utils";
 
 export async function createParticipant(
     id: string,
@@ -53,7 +53,7 @@ export async function createGroup(_state: any, formData: FormData) {
     const budget = formData.get("budget");
     const dateOfExchange = formData.get("exchangeDate");
     const password = formData.get("password");
-    const reenterPassword = formData.get("reenterPassword")
+    const reenterPassword = formData.get("reenterPassword");
 
     if (!name || !budget || !dateOfExchange || !password || !reenterPassword) {
         return {
@@ -90,6 +90,8 @@ export async function createGroupSantaMapping(id: string) {
     });
 
     await Promise.all(createPromises);
+
+    sendEmail(id);
 
     return {
         message:

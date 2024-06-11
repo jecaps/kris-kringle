@@ -36,7 +36,7 @@ export function ShuffleButton({ id }: { id: string }) {
             toast.current?.show({
                 severity: "success",
                 detail: state.message,
-                life: 5000,
+                life: 10000,
             });
         }
     });
@@ -64,7 +64,7 @@ export function SettingsButton({ id }: { id: string }) {
     );
 }
 
-export function JoinGroupButton({id} : {id: string}) {
+export function JoinGroupButton({ id }: { id: string }) {
     const [createVisible, setCreateVisible] = useState(false);
 
     return (
@@ -76,7 +76,7 @@ export function JoinGroupButton({id} : {id: string}) {
                 size="small"
                 severity="help"
                 rounded
-                >
+            >
                 Join Group
             </Btn>
             <Dialog
@@ -91,12 +91,12 @@ export function JoinGroupButton({id} : {id: string}) {
                 />
             </Dialog>
         </>
-    )
+    );
 }
 
-export function ShareLinkButton({id} : {id: string}) {
+export function ShareLinkButton({ id }: { id: string }) {
     const toast = useRef<Toast>(null);
-    
+
     function copyLinkHandler() {
         navigator.clipboard.writeText(window.location.origin + `/groups/${id}`);
         if (toast.current) {
@@ -107,7 +107,7 @@ export function ShareLinkButton({id} : {id: string}) {
             });
         }
     }
-    
+
     return (
         <>
             <Btn
@@ -117,10 +117,10 @@ export function ShareLinkButton({id} : {id: string}) {
                 size="small"
                 severity="secondary"
                 rounded
-                >
+            >
                 Share Link
             </Btn>
             <Toast ref={toast} />
         </>
-    )
+    );
 }
