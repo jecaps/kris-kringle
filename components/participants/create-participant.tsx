@@ -9,7 +9,12 @@ function SubmitBtn() {
     const { pending } = useFormStatus();
 
     return (
-        <Btn className="justify-content-center gap-2" size="small" loading={pending} rounded>
+        <Btn
+            className="justify-content-center gap-2"
+            size="small"
+            loading={pending}
+            rounded
+        >
             {pending ? "Submitting" : "Submit"}
         </Btn>
     );
@@ -55,7 +60,7 @@ export default function CreateParticipantForm({
                         Email
                     </label>
                     <InputText
-                        type="text"
+                        type="email"
                         id="email"
                         name="email"
                         className={state?.error ? "p-invalid" : ""}
