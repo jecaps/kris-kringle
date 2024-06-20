@@ -5,33 +5,38 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { fetchGroupParticipants, deleteSantaMapping } from "./data";
 import { sendEmail, shuffleParticipants } from "./utils";
+import { z } from "zod";
+
+const ParticipantSchema = z.object({
+    name: z.string(),
+    wishlist: z.string(),
+    email: z.string().email(),
+});
 
 export async function createParticipant(
     id: string,
     _state: any,
     formData: FormData
 ) {
-    const name = formData.get("name");
-    const wishlist = formData.get("wishlist");
-    const email = formData.get("email");
-
-    if (!name || !wishlist || !email) {
-        return {
-            error: "All fields are required.",
-        };
-    }
-
-    let wishlistArray: string[] | undefined;
-
-    if (typeof wishlist === "string") {
-        wishlistArray = wishlist.split(", ");
-    }
+    const data = {
+        name: formData.get("name"),
+        wishlist: formData.get("wishlist"),
+        email: formData.get("email"),
+    };
 
     try {
+        const validatedData = ParticipantSchema.parse(data);
+
+        let wishlistArray: string[] | undefined;
+
+        if (typeof validatedData.wishlist === "string") {
+            wishlistArray = validatedData.wishlist.split(", ");
+        }
+
         await prisma.participant.create({
             data: {
-                name: name as string,
-                email: email as string,
+                name: validatedData.name,
+                email: validatedData.email,
                 wishlist: wishlistArray,
                 group: {
                     connect: {
@@ -41,7 +46,9 @@ export async function createParticipant(
             },
         });
         revalidatePath(`/groups/${id}`, "page");
-        return { message: `${name} has been added to the group!` };
+        return {
+            message: `${validatedData.name} has been added to the group!`,
+        };
     } catch (error) {
         console.error(error);
         return { error: "An error occurred while adding the participant." };
