@@ -28,7 +28,7 @@ export default function CreateGroupForm() {
             <form
                 action={formAction}
                 className="grid w-6 mx-auto text-left border-round"
-                style={{height:"80%"}}
+                style={{ height: "80%" }}
             >
                 <div className="col-12">
                     <label
@@ -55,14 +55,19 @@ export default function CreateGroupForm() {
                         Password
                     </label>
                     <Password
-                        className={`${state?.error || password !== reenterPassword && reenterPassword && "p-invalid"}`}
-                        inputStyle={{ width: "100%"}}
-                        style={{ width: "100%"}}
+                        className={`${
+                            state?.error ||
+                            (password !== reenterPassword &&
+                                reenterPassword &&
+                                "p-invalid")
+                        }`}
+                        inputStyle={{ width: "100%" }}
+                        style={{ width: "100%" }}
                         name="password"
                         id="password"
                         feedback={false}
                         toggleMask
-                        onChange={(e) => setPassword(e.target.value) }
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
                 <div className="col-6">
@@ -75,9 +80,14 @@ export default function CreateGroupForm() {
                         Reenter Password
                     </label>
                     <Password
-                        className={`${state?.error || password !== reenterPassword && reenterPassword && "p-invalid"}`}
-                        inputStyle={{ width: "100%"}}
-                        style={{ width: "100%"}}
+                        className={`${
+                            state?.error ||
+                            (password !== reenterPassword &&
+                                reenterPassword &&
+                                "p-invalid")
+                        }`}
+                        inputStyle={{ width: "100%" }}
+                        style={{ width: "100%" }}
                         name="reenterPassword"
                         id="reenterPassword"
                         feedback={false}
@@ -93,7 +103,7 @@ export default function CreateGroupForm() {
                         className={`${
                             state?.error ? "text-red-600" : ""
                         } block mb-2 text-sm`}
-                        >
+                    >
                         Budget for Gift
                     </label>
                     <InputText
@@ -101,7 +111,7 @@ export default function CreateGroupForm() {
                         className={`${state?.error ? "p-invalid" : ""} w-full`}
                         name="budget"
                         id="budget"
-                        />
+                    />
                 </div>
                 <div className="col-6">
                     <label
@@ -109,7 +119,7 @@ export default function CreateGroupForm() {
                         className={`${
                             state?.error ? "text-red-600" : ""
                         } block mb-2 text-sm`}
-                        >
+                    >
                         Date of Exchanging Gifts
                     </label>
                     <Calendar
@@ -119,25 +129,23 @@ export default function CreateGroupForm() {
                         showIcon
                         placeholder="dd/mm/yy"
                         dateFormat="dd/mm/yy"
-                        />
+                    />
                 </div>
                 <SubmitBtn />
             </form>
 
             {state?.error && (
-                <p 
-                    className="text-red-500 text-xs"
-                    style={{height:"10%"}}
-                    >
-                        {state.error}
+                <p className="text-red-500 text-xs" style={{ height: "10%" }}>
+                    {state.error}
                 </p>
             )}
             {reenterPassword && password !== reenterPassword && (
-                <div 
+                <div
                     className="col-12 text-sm text-red-600"
-                    style={{height:"10%"}}
-                    >
-                    Passwords do not match</div>
+                    style={{ height: "10%" }}
+                >
+                    Passwords do not match
+                </div>
             )}
         </div>
     );
