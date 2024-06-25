@@ -29,6 +29,8 @@ export async function sendEmail(groupId: string) {
     const user = process.env.EMAIL;
     const pass = process.env.PASSWORD;
 
+    console.log(user, pass);
+
     const transporter = nodemailer.createTransport({
         host: "smtp.strato.de",
         port: 465,
