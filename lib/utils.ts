@@ -41,6 +41,15 @@ export async function sendEmail(groupId: string) {
         },
     });
 
+    transporter.verify((error, success) => {
+        if (error) {
+            console.error("Connection error:", error);
+            return;
+        } else {
+            console.log("Server is ready to take our messages");
+        }
+    });
+
     result.map(async (item) => {
         const mailOptions = {
             from: user,
