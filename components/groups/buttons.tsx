@@ -43,7 +43,7 @@ export function ShuffleButton({ id }: { id: string }) {
 
     return (
         <>
-            <form action={dispatch}>
+            <form className="my-auto" action={dispatch}>
                 <SubmitButton />
             </form>
             <Toast ref={toast} position="bottom-center" />

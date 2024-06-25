@@ -27,7 +27,13 @@ function SubmitButton() {
     );
 }
 
-export default function GroupHeader({ group }: { group: Group }) {
+export default function GroupHeader({
+    group,
+    hasPassword,
+}: {
+    group: Group;
+    hasPassword: boolean;
+}) {
     const { name, budget, dateOfExchange } = group;
     const reformattedDate = dateOfExchange.split("/").reverse().join("-");
     const toast = useRef<Toast>(null);
@@ -122,16 +128,21 @@ export default function GroupHeader({ group }: { group: Group }) {
                 <div className="flex flex-column align-items-center h-5rem">
                     <div className="relative">
                         <h1 className="m-0 mb-2">{name}</h1>
-                        <Button
-                            className="absolute w-2rem h-2rem p-0 focus:shadow-none"
-                            style={{ right: "-2rem", top: "-0.5rem" }}
-                            size="small"
-                            text
-                            rounded
-                            icon="pi pi-cog"
-                            onClick={(e) => menu.current?.toggle(e)}
-                        ></Button>
-                        <TieredMenu model={items} popup ref={menu} />
+
+                        {hasPassword && (
+                            <>
+                                <Button
+                                    className="absolute w-2rem h-2rem p-0 focus:shadow-none"
+                                    style={{ right: "-2rem", top: "-0.5rem" }}
+                                    size="small"
+                                    text
+                                    rounded
+                                    icon="pi pi-cog"
+                                    onClick={(e) => menu.current?.toggle(e)}
+                                ></Button>
+                                <TieredMenu model={items} popup ref={menu} />
+                            </>
+                        )}
                     </div>
                     <div className="grid text-center">
                         <span className="col-6 pi pi-gift"></span>

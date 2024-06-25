@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { useRef, useState } from "react";
@@ -13,9 +12,11 @@ import DeleteParticipant from "./delete-participant";
 export default function ParticipantsList({
     id,
     participants,
+    hasPassword,
 }: {
     id: string;
     participants: Participant[] | undefined;
+    hasPassword: boolean;
 }) {
     const op = useRef<any>(null);
     const [editVisible, setEditVisible] = useState(false);
@@ -103,8 +104,14 @@ export default function ParticipantsList({
                 header="Wishlist"
                 body={wishlistBodyTemplate}
             ></Column>
-            <Column body={editButton} className="w-3rem"></Column>
-            <Column body={deleteButton} className="w-3rem"></Column>
+
+            {hasPassword && (
+                <Column body={editButton} className="w-3rem"></Column>
+            )}
+
+            {hasPassword && (
+                <Column body={deleteButton} className="w-3rem"></Column>
+            )}
         </DataTable>
     );
 }

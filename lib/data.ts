@@ -66,6 +66,16 @@ export async function fetchSantaMapping(id: string) {
     return { group, result };
 }
 
+export async function getGroupPassword(groupId: string) {
+    const group = await prisma.group.findUnique({
+        where: {
+            id: groupId,
+        },
+    });
+
+    return group?.password;
+}
+
 export async function updateGroup(
     groupId: string,
     _state: any,
@@ -165,4 +175,19 @@ export async function deleteSantaMapping(groupId: string) {
             groupId: groupId,
         },
     });
+}
+
+export async function checkPassword(
+    groupId: string,
+    _state: any,
+    formData: FormData
+) {
+    const groupPassword = await getGroupPassword(groupId);
+    const enteredPassword = formData.get("enteredPassword");
+
+    if (groupPassword !== enteredPassword) {
+        return { error: "Wrong Password", response: false };
+    }
+
+    return { response: true };
 }
