@@ -80,28 +80,59 @@ export async function createGroup(_state: any, formData: FormData) {
     redirect(`/groups/${group.id}`);
 }
 
+// export async function createGroupSantaMapping(id: string) {
+//     await deleteSantaMapping(id);
+//     const participants = await fetchGroupParticipants(id);
+
+//     const shuffledParticipants = shuffleParticipants(participants);
+
+//     const createPromises = shuffledParticipants.map((santa, i) => {
+//         return prisma.santaMapping.create({
+//             data: {
+//                 participantId: participants[i].id,
+//                 santaId: santa.id,
+//                 groupId: id,
+//             },
+//         });
+//     });
+
+//     await Promise.all(createPromises);
+
+//     sendEmail(id);
+
+//     return {
+//         message:
+//             "The names have been shuffled! An email will be sent to each participant of this group with the name and the wishlist of the person they are giving a gift to.",
+//     };
+// }
+
 export async function createGroupSantaMapping(id: string) {
-    await deleteSantaMapping(id);
-    const participants = await fetchGroupParticipants(id);
+    try {
+        await deleteSantaMapping(id);
+        const participants = await fetchGroupParticipants(id);
 
-    const shuffledParticipants = shuffleParticipants(participants);
+        const shuffledParticipants = shuffleParticipants(participants);
 
-    const createPromises = shuffledParticipants.map((santa, i) => {
-        return prisma.santaMapping.create({
-            data: {
-                participantId: participants[i].id,
-                santaId: santa.id,
-                groupId: id,
-            },
+        const createPromises = shuffledParticipants.map((santa, i) => {
+            return prisma.santaMapping.create({
+                data: {
+                    participantId: participants[i].id,
+                    santaId: santa.id,
+                    groupId: id,
+                },
+            });
         });
-    });
 
-    await Promise.all(createPromises);
+        await Promise.all(createPromises);
 
-    sendEmail(id);
+        await sendEmail(id); // Assuming sendEmail returns a promise
 
-    return {
-        message:
-            "The names have been shuffled! An email will be sent to each participant of this group with the name and the wishlist of the person they are giving a gift to.",
-    };
+        return {
+            message:
+                "The names have been shuffled! An email will be sent to each participant of this group with the name and the wishlist of the person they are giving a gift to.",
+        };
+    } catch (error) {
+        console.error(error);
+        throw new Error("Failed to create group santa mapping and send email");
+    }
 }
