@@ -39,13 +39,16 @@ export async function sendEmail(groupId: string) {
         },
     });
 
-    transporter.verify((error, success) => {
-        if (error) {
-            console.error("Connection error:", error);
-            return;
-        } else {
-            console.log("Server is ready to take our messages");
-        }
+    await new Promise((resolve, reject) => {
+        transporter.verify(function (error, success) {
+            if (error) {
+                console.log(error);
+                reject(error);
+            } else {
+                console.log("Server is ready to take our messages");
+                resolve(success);
+            }
+        });
     });
 
     result.map(async (item) => {
@@ -99,11 +102,13 @@ export async function sendEmail(groupId: string) {
         };
         // await transporter.sendMail(mailOptions);
 
-        return await new Promise((resolve, reject) => {
+        await new Promise((resolve, reject) => {
             transporter.sendMail(mailOptions, (err, info) => {
                 if (err) {
+                    console.error(err);
                     reject(err);
                 } else {
+                    console.log(info);
                     resolve(info);
                 }
             });
