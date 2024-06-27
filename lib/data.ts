@@ -1,8 +1,14 @@
 "use server";
 
 import prisma from "./db";
+import { z } from "zod";
+import { compare } from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+
+const MatchPasswordSchema = z.object({
+    enteredPassword: z.string(),
+});
 
 export async function fetchGroup(id: string) {
     return await prisma.group.findUnique({
@@ -182,10 +188,17 @@ export async function checkPassword(
     _state: any,
     formData: FormData
 ) {
+    const data = { enteredPassword: formData.get("enteredPassword") };
     const groupPassword = await getGroupPassword(groupId);
-    const enteredPassword = formData.get("enteredPassword");
 
-    if (groupPassword !== enteredPassword) {
+    if (!groupPassword) {
+        return { error: "Group password not found", response: false };
+    }
+
+    const validatedData = MatchPasswordSchema.parse(data);
+    const isMatch = await compare(validatedData.enteredPassword, groupPassword);
+
+    if (!isMatch) {
         return { error: "Wrong Password", response: false };
     }
 

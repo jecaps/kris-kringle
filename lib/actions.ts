@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
+import bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { fetchGroupParticipants, deleteSantaMapping } from "./data";
@@ -11,6 +12,14 @@ const ParticipantSchema = z.object({
     name: z.string(),
     wishlist: z.string(),
     email: z.string().email(),
+});
+
+const GroupSchema = z.object({
+    name: z.string(),
+    budget: z.string().transform(parseFloat),
+    dateOfExchange: z.string(),
+    password: z.string(),
+    reenterPassword: z.string(),
 });
 
 export async function createParticipant(
@@ -56,24 +65,40 @@ export async function createParticipant(
 }
 
 export async function createGroup(_state: any, formData: FormData) {
-    const name = formData.get("name");
-    const budget = formData.get("budget");
-    const dateOfExchange = formData.get("exchangeDate");
-    const password = formData.get("password");
-    const reenterPassword = formData.get("reenterPassword");
+    const data = {
+        name: formData.get("name"),
+        budget: formData.get("budget"),
+        dateOfExchange: formData.get("exchangeDate"),
+        password: formData.get("password"),
+        reenterPassword: formData.get("reenterPassword"),
+    };
 
-    if (!name || !budget || !dateOfExchange || !password || !reenterPassword) {
+    const validatedData = GroupSchema.parse(data);
+
+    if (
+        !validatedData.name ||
+        !validatedData.budget ||
+        !validatedData.dateOfExchange ||
+        !validatedData.password ||
+        !validatedData.reenterPassword
+    ) {
         return {
             error: "All fields are required.",
         };
     }
 
+    const saltRounds = 15;
+    const hashedPassword = await bcrypt.hash(
+        validatedData.password,
+        saltRounds
+    );
+
     const group = await prisma.group.create({
         data: {
-            name: name as string,
-            password: password as string,
-            budget: +budget,
-            dateOfExchange: dateOfExchange as string,
+            name: validatedData.name,
+            password: hashedPassword,
+            budget: validatedData.budget,
+            dateOfExchange: validatedData.dateOfExchange,
         },
     });
 
