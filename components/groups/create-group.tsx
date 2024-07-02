@@ -4,9 +4,9 @@ import { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
-import { Password } from "primereact/password";
 import { createGroup } from "@/lib/actions";
 import Btn from "@/components/ui/button";
+import clsx from "clsx";
 
 function SubmitBtn() {
     const { pending } = useFormStatus();
@@ -21,7 +21,7 @@ function SubmitBtn() {
 export default function CreateGroupForm() {
     const [state, formAction] = useFormState(createGroup, undefined);
     const [password, setPassword] = useState("");
-    const [reenterPassword, setReenterPassword] = useState("");
+    const [verifyPassword, setVerifyPassword] = useState("");
 
     return (
         <div className="flex flex-column">
@@ -54,46 +54,42 @@ export default function CreateGroupForm() {
                     >
                         Password
                     </label>
-                    <Password
-                        className={`${
+                    <InputText
+                        className={clsx(
+                            "w-full",
                             state?.error ||
-                            (password !== reenterPassword &&
-                                reenterPassword &&
-                                "p-invalid")
-                        }`}
-                        inputStyle={{ width: "100%" }}
-                        style={{ width: "100%" }}
+                                (password !== verifyPassword &&
+                                    verifyPassword &&
+                                    "p-invalid focus:shadow-none")
+                        )}
+                        type="password"
                         name="password"
                         id="password"
-                        feedback={false}
-                        toggleMask
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
                 <div className="col-6">
                     <label
-                        htmlFor="reenterPassword"
+                        htmlFor="verify-password"
                         className={`${
                             state?.error ? "text-red-600" : ""
                         } block mb-2 text-sm`}
                     >
                         Reenter Password
                     </label>
-                    <Password
-                        className={`${
+                    <InputText
+                        className={clsx(
+                            "w-full",
                             state?.error ||
-                            (password !== reenterPassword &&
-                                reenterPassword &&
-                                "p-invalid")
-                        }`}
-                        inputStyle={{ width: "100%" }}
-                        style={{ width: "100%" }}
-                        name="reenterPassword"
-                        id="reenterPassword"
-                        feedback={false}
-                        toggleMask
+                                (password !== verifyPassword &&
+                                    verifyPassword &&
+                                    "p-invalid focus:shadow-none")
+                        )}
+                        type="password"
+                        name="verify-password"
+                        id="verify-password"
                         onChange={(e) => {
-                            setReenterPassword(e.target.value);
+                            setVerifyPassword(e.target.value);
                         }}
                     />
                 </div>
@@ -139,7 +135,7 @@ export default function CreateGroupForm() {
                     {state.error}
                 </p>
             )}
-            {reenterPassword && password !== reenterPassword && (
+            {verifyPassword && password !== verifyPassword && (
                 <div
                     className="col-12 text-sm text-red-600"
                     style={{ height: "10%" }}
