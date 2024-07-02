@@ -19,7 +19,7 @@ const GroupSchema = z.object({
     budget: z.string().transform(parseFloat),
     dateOfExchange: z.string(),
     password: z.string(),
-    reenterPassword: z.string(),
+    verifyPassword: z.string(),
 });
 
 export async function createParticipant(
@@ -70,7 +70,7 @@ export async function createGroup(_state: any, formData: FormData) {
         budget: formData.get("budget"),
         dateOfExchange: formData.get("exchangeDate"),
         password: formData.get("password"),
-        reenterPassword: formData.get("reenterPassword"),
+        verifyPassword: formData.get("verify-password"),
     };
 
     const validatedData = GroupSchema.parse(data);
@@ -80,7 +80,7 @@ export async function createGroup(_state: any, formData: FormData) {
         !validatedData.budget ||
         !validatedData.dateOfExchange ||
         !validatedData.password ||
-        !validatedData.reenterPassword
+        !validatedData.verifyPassword
     ) {
         return {
             error: "All fields are required.",
