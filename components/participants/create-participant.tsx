@@ -1,8 +1,8 @@
 "use client";
 
 import Btn from "../ui/button";
-import { useFormState, useFormStatus } from "react-dom";
-import { createParticipant } from "@/lib/actions";
+import clsx from "clsx";
+import { useFormStatus } from "react-dom";
 import { InputText } from "primereact/inputtext";
 
 function SubmitBtn() {
@@ -21,24 +21,21 @@ function SubmitBtn() {
 }
 
 export default function CreateParticipantForm({
-    id,
     closeDialog,
+    error,
+    dispatch,
 }: {
-    id: string;
     closeDialog: any;
+    error: any;
+    dispatch: any;
 }) {
-    const createParticipantToGroup = createParticipant.bind(null, id);
-    const [state, dispatch] = useFormState(createParticipantToGroup, undefined);
-
     return (
         <>
             <form className="grid" action={dispatch}>
                 <div className="col-6 flex flex-column gap-2">
                     <label
                         htmlFor="name"
-                        className={`${
-                            state?.error ? "text-red-600" : ""
-                        } text-sm`}
+                        className={clsx("text-sm", error && "text-red-600")}
                     >
                         Name
                     </label>
@@ -46,16 +43,13 @@ export default function CreateParticipantForm({
                         type="text"
                         id="name"
                         name="name"
-                        className={state?.error ? "p-invalid" : ""}
-                        disabled={state?.message ? true : false}
+                        className={clsx(error && "p-invalid focus:shadow-none")}
                     />
                 </div>
                 <div className="col-6 flex flex-column gap-2">
                     <label
                         htmlFor="email"
-                        className={`${
-                            state?.error ? "text-red-600" : ""
-                        } text-sm`}
+                        className={clsx("text-sm", error && "text-red-600")}
                     >
                         Email
                     </label>
@@ -63,16 +57,13 @@ export default function CreateParticipantForm({
                         type="email"
                         id="email"
                         name="email"
-                        className={state?.error ? "p-invalid" : ""}
-                        disabled={state?.message ? true : false}
+                        className={clsx(error && "p-invalid focus:shadow-none")}
                     />
                 </div>
                 <div className="col-12 flex flex-column gap-2">
                     <label
                         htmlFor="wishlist"
-                        className={`${
-                            state?.error ? "text-red-600" : ""
-                        } text-sm`}
+                        className={clsx("text-sm", error && "text-red-600")}
                     >
                         Wishlist
                     </label>
@@ -81,44 +72,25 @@ export default function CreateParticipantForm({
                         id="wishlist"
                         name="wishlist"
                         placeholder="example: books, pens, shoes"
-                        className={state?.error ? "p-invalid" : ""}
-                        disabled={state?.message ? true : false}
+                        className={clsx(error && "p-invalid focus:shadow-none")}
                     />
                 </div>
                 <div className="col-12 flex flex-column gap-2">
-                    {state?.error && (
-                        <p className="text-xs text-red-400 m-0">
-                            {state.error}
-                        </p>
+                    {error && (
+                        <p className="text-xs text-red-400 m-0">{error}</p>
                     )}
-                    {state?.message ? (
-                        <div className="mx-auto text-center">
-                            <h3 className="text-green-400 m-0">
-                                {state.message}
-                            </h3>
-                            <Btn
-                                className="w-6 mt-2 justify-content-center"
-                                onClick={closeDialog}
-                                size="small"
-                                rounded
-                                outlined
-                            >
-                                Close
-                            </Btn>
-                        </div>
-                    ) : (
-                        <div className="flex gap-2 mx-auto">
-                            <Btn
-                                onClick={closeDialog}
-                                size="small"
-                                rounded
-                                outlined
-                            >
-                                Cancel
-                            </Btn>
-                            <SubmitBtn />
-                        </div>
-                    )}
+
+                    <div className="flex gap-2 mx-auto">
+                        <Btn
+                            onClick={closeDialog}
+                            size="small"
+                            rounded
+                            outlined
+                        >
+                            Cancel
+                        </Btn>
+                        <SubmitBtn />
+                    </div>
                 </div>
             </form>
         </>

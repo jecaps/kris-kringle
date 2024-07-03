@@ -2,7 +2,7 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 import { useEffect, useRef, useState } from "react";
-import { createGroupSantaMapping } from "@/lib/actions";
+import { createGroupSantaMapping, createParticipant } from "@/lib/actions";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
 import CreateParticipantForm from "../participants/create-participant";
@@ -65,7 +65,22 @@ export function SettingsButton({ id }: { id: string }) {
 }
 
 export function JoinGroupButton({ id }: { id: string }) {
+    const toast = useRef<Toast>(null);
     const [createVisible, setCreateVisible] = useState(false);
+
+    const createParticipantToGroup = createParticipant.bind(null, id);
+    const [state, dispatch] = useFormState(createParticipantToGroup, undefined);
+
+    useEffect(() => {
+        if (state?.message) {
+            setCreateVisible(false);
+            toast.current?.show({
+                severity: "success",
+                detail: state?.message,
+                life: 5000,
+            });
+        }
+    }, [state]);
 
     return (
         <>
@@ -86,10 +101,12 @@ export function JoinGroupButton({ id }: { id: string }) {
                 className="md:w-3"
             >
                 <CreateParticipantForm
-                    id={id}
                     closeDialog={() => setCreateVisible(false)}
+                    error={state?.error}
+                    dispatch={dispatch}
                 />
             </Dialog>
+            <Toast ref={toast} position="bottom-center" />
         </>
     );
 }
